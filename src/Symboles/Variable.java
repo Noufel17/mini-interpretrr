@@ -3,15 +3,12 @@ package Symboles;
 import Exceptions.VarNomCmdException;
 import Exceptions.VarNomFctException;
 import Exceptions.VarNomfauxException;
-import Symboles.Symbole;
 
 public class Variable extends Symbole {
-    // instance variables - replace the example below with your own
-    private String nom;
     private double valeur;
 
     public Variable(String nom) {
-        this.nom = nom;
+        this.nom=nom;
     }
 
     public double getValeur() {
@@ -20,11 +17,6 @@ public class Variable extends Symbole {
 
     public void setValeur(double valeur) {
         this.valeur = valeur;
-    }
-
-    @Override
-    public String getNom() {
-        return nom;
     }
 
     public boolean verifierNom() throws VarNomCmdException, VarNomfauxException, VarNomFctException {

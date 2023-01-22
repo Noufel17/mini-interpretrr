@@ -6,16 +6,20 @@ import TP.TableSymbole;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Term {
-    private String term;
+public class Term implements Evaluable{
+    private final String term;
     private String buffer;
-    private List<Facteur> facteurList= new ArrayList<>();
-    private List<Character> operateurList= new ArrayList<>();
+    private final List<Facteur> facteurList= new ArrayList<>();
+    private final List<Character> operateurList= new ArrayList<>();
     public Term(String term) {
         this.term = term;
     }
-
-    public double evaluer(TableSymbole table) throws ExpressionException{
+    @Override
+    public String [] extraire(String expression){
+        return expression.split("(?=[\\*\\/](?![^\\(]*\\)))|(?<=[\\*\\/](?![^\\(]{0,99}\\)))");
+    }
+    @Override
+    public double evaluer() throws ExpressionException{
 
         this.formerFacteurs(term);
 
@@ -26,11 +30,11 @@ public class Term {
         for(int i=0,j=(operateurList.size()==facteurList.size())?0:-1;i<facteurList.size()&&j<operateurList.size();i++,j++)
         {
             if (j>-1 && j==0) {
-                valeur=(operateurList.get(j)=='*')?(valeur*facteurList.get(i).evaluer(table)):valeur/facteurList.get(i).evaluer(table);
+                valeur=(operateurList.get(j)=='*')?(valeur*facteurList.get(i).evaluer()):valeur/facteurList.get(i).evaluer();
             }
             else
             {
-                valeur=facteurList.get(i).evaluer(table);// pour lui faire multiplier apres , c'est le premier
+                valeur=facteurList.get(i).evaluer();// pour lui faire multiplier apres , c'est le premier
             }
         }
 

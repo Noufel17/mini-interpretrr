@@ -8,17 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 import static java.lang.Math.pow;
 
-public class Facteur {
-    private String facteur;
-    private List<Element> elementList= new ArrayList<>();
-    private List<Character> operateurList= new ArrayList<>();
+public class Facteur implements Evaluable {
+    private final String facteur;
+    private final List<Element> elementList= new ArrayList<>();
+    private final List<Character> operateurList= new ArrayList<>();
     private String buffer;
+
+    @Override
+    public String [] extraire(String expression){
+        return expression.split("\\^(?![^\\(]*\\))");
+    }
 
     public Facteur(String facteur) {
         this.facteur = facteur;
     }
 
-    public double evaluer(TableSymbole table) throws ExpressionException{
+    @Override
+    public double evaluer() throws ExpressionException{
 
         this.formerElements(facteur);
 
@@ -29,10 +35,10 @@ public class Facteur {
         for(int i=0,j=(operateurList.size()==elementList.size())?0:-1;i<elementList.size()&&j<operateurList.size();i++,j++)
         {
             if(j>-1 && j==0) {
-                valeur = pow(valeur, elementList.get(i).evaluer(table));
+                valeur = pow(valeur, elementList.get(i).evaluer());
             }
             else
-                valeur= elementList.get(i).evaluer(table);
+                valeur= elementList.get(i).evaluer();
         }
 
         return valeur;

@@ -1,6 +1,8 @@
 package Commandes;
 
-public abstract class Commande {
-    public abstract int executer();// executer la commande selon son type
+import Exceptions.ExpressionException;
+
+public interface Commande {
+    int executer(String ligneCmd) throws ExpressionException;// executer la commande selon son type
 }
 

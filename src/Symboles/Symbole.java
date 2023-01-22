@@ -1,5 +1,9 @@
 package Symboles;
 
 public abstract class Symbole {
-    public abstract String getNom();
+    protected String nom;
+
+    public String getNom() {
+        return this.nom;
+    }
 }

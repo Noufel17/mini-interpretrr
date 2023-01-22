@@ -2,23 +2,29 @@ package Evaluation;
 
 import Evaluation.*;
 import Exceptions.*;
-import Symboles.NomFonction;
-import TP.*;
-
+import TP.TableSymbole;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Expression implements Evaluable {
-    private String expression;
-    private List<Term> termList= new ArrayList<>();
-    private List<Character> OperateurList= new ArrayList<>();
+    private final String expression;
+    private final List<Term> termList= new ArrayList<>();
+    private final List<Character> OperateurList= new ArrayList<>();
     private String buffer;
 
     public Expression(String expression) {
         this.expression = expression;
     }
+    @Override
+    public String [] extraire(String expression){
+        return expression.split("(?=[\\+\\-](?![^\\(]*\\)))|(?<=[\\+\\-](?![^\\(]{0,99}\\)))");}
 
-    public double evaluer(TableSymbole table) throws ExpressionException{
+
+
+    public double evaluer() throws ExpressionException{
         // verification des parentheses
         /*int ouvr=0,ferm=0;
         for (int k = 0; k < expression.length(); k++) {
@@ -63,7 +69,7 @@ public class Expression implements Evaluable {
                         }
                         str2+=SplittedExpression[i];// la parethese fermante est essentielle ici
                         Expression exp= new Expression(str2);
-                        double result= exp.evaluer(table);// evaluer le parametre de la fonction
+                        double result= exp.evaluer();// evaluer le parametre de la fonction
 
                     }else{ // expression normale
                         while(!(SplittedExpression[i].equals(")")||i==SplittedExpression.length-1)){
@@ -75,7 +81,7 @@ public class Expression implements Evaluable {
                     Expression s_expr= new Expression(str2);
                     try {
                         // expression erronee
-                        stringBuilder.append(table.getFunctionValue(str, s_expr.evaluer(table))); // evaluer l'expression de la fonction puis la metter dans la nouvelle chaine
+                        stringBuilder.append(TableSymbole.getInstance().getFunctionValue(str, s_expr.evaluer())); // evaluer l'expression de la fonction puis la metter dans la nouvelle chaine
                     }catch(LogException e1){
                         System.out.println(e1);
                     }
@@ -93,7 +99,7 @@ public class Expression implements Evaluable {
                     stringBuilder.append(SplittedExpression[i]);// la parethese fermante de la fonction
                 }else{ // c'est une variable hopefully
                     try{
-                        stringBuilder.append(table.getVariableValue(str));// remplacer la variable par sa valeur
+                        stringBuilder.append(TableSymbole.getInstance().getVariableValue(str));// remplacer la variable par sa valeur
                     }catch(SymboleVarNexistePas e){
                         System.out.println(e);
                     }
@@ -115,11 +121,11 @@ public class Expression implements Evaluable {
         {
             //termList.get(i).verifier(); // definir verifier dans term
             if (j>-1 && j==0) { // donc il'ya un mois au debut ou expression erronee
-                valeur=(OperateurList.get(j)=='-')?(valeur-termList.get(i).evaluer(table)):valeur+termList.get(i).evaluer(table);
+                valeur=(OperateurList.get(j)=='-')?(valeur-termList.get(i).evaluer()):valeur+termList.get(i).evaluer();
             }
             else // sinon on ajoute le premier terme
             {
-                valeur=valeur+termList.get(i).evaluer(table);
+                valeur=valeur+termList.get(i).evaluer();
             }
         }
         return valeur;
