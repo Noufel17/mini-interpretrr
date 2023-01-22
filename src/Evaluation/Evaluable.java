@@ -3,7 +3,8 @@ package Evaluation;
 import Exceptions.ExpressionException;
 import TP.TableSymbole;
 
+import java.util.List;
+
 public interface Evaluable {
-    String [] extraire(String expression);
-    double evaluer() throws ExpressionException;
+    double evaluer() throws Exception;
 }

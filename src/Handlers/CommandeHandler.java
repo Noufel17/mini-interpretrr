@@ -8,5 +8,5 @@ public abstract class CommandeHandler {
 
     public abstract void setNext(CommandeHandler handler);
     public abstract boolean isMatched(String lignCmd);
-    public abstract Commande creerInstance();
+    public abstract Commande creerInstance(String lignCmd);
 }

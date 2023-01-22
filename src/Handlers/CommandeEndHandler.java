@@ -4,6 +4,10 @@ import Commandes.Commande;
 import Commandes.CommandeEnd;
 
 public class CommandeEndHandler extends CommandeHandler {
+    public CommandeEndHandler() {
+        this.motCle = "end";
+    }
+
     @Override
     public void setNext(CommandeHandler handler) {
         this.next = handler;
@@ -15,8 +19,12 @@ public class CommandeEndHandler extends CommandeHandler {
     }
 
     @Override
-    public Commande creerInstance() {
-        return new CommandeEnd();
+    public Commande creerInstance(String lignCmd) {
+        if (isMatched(lignCmd)){
+            return new CommandeEnd();
+        }else{
+            return next.creerInstance(lignCmd);
+        }
     }
 
 }

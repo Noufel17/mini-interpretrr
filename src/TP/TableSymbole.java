@@ -9,39 +9,55 @@ public class TableSymbole {
     private static TableSymbole instance;
     private TableSymbole() {
         this.tableSymbole = new ArrayList<>();
+        tableSymbole.add(new Absolute());
+        tableSymbole.add(new Cosinus());
+        tableSymbole.add(new Sinus());
+        tableSymbole.add(new Tangent());
+        tableSymbole.add(new SquareRoot());
+        tableSymbole.add(new Logarithm());
     }
 
     public void addVairable(Variable var){
-
+        tableSymbole.add(var);
     }
     public boolean isAvailable(String variableName){
-       // implement
-       return false;
+        boolean available = true;
+       for (Symbole symbole : tableSymbole){
+           if(symbole.getNom().equals(variableName)){
+               available=false;
+               break;
+           }
+       }
+       return available;
     }
-    public Symbole getFunction(String nom){
-        return new Sinus();
-    }
-    public Symbole getVariable(String nom){
-        return new Variable();
-    }
-    public static TableSymbole getInstance(){
-        if(TableSymbole.instance != null){
-            return TableSymbole.instance;
+    public Function getFunction(String nom){
+        for (Symbole symbole : tableSymbole){
+            if(symbole.getNom().equals(nom)){
+               return (Function)symbole;
+            }
         }
-        return new TableSymbole();
+        return null;
     }
-    public void supprimerSymbole(Symbole s){
-        tableSymbole.remove(s);
+    public void setVariable(String nom,double val){
+        for (Symbole symbole : tableSymbole){
+            if(symbole.getNom().equals(nom)){
+                ((Variable)symbole).setValeur(val);
+            }
+        }
     }
-    public double getFunctionValue (String nom, double param) throws SymboleFunNexistePas, LogException,SqrtException, PasUneFonctionException{
-//        for(Symbole sym : tableSymbole){
-//            if(sym.getNom().equalsIgnoreCase(nom)){
-//                return ((Function)sym).evaluer(param);
-//            }
-//        }
-//        throw new SymboleFunNexistePas();
-        // cahnges completelly
-        return 0.0; // awaits implementation
+    public Variable getVariable(String nom) throws SymboleVarNexistePas{
+        for (Symbole symbole : tableSymbole){
+            if(symbole.getNom().equals(nom)){
+                return (Variable)symbole;
+            }
+        }
+        throw new SymboleVarNexistePas();
+    }
+    public static TableSymbole getInstance() {
+        if(instance == null){
+            instance = new TableSymbole();
+        }
+        return instance;
     }
     public double getVariableValue(String nom) throws SymboleVarNexistePas{
         for (Symbole symVar : tableSymbole) {

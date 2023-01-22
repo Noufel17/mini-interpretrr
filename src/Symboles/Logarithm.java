@@ -5,6 +5,10 @@ import Exceptions.PasUneFonctionException;
 import Exceptions.SqrtException;
 
 public class Logarithm extends Function{
+    public Logarithm() {
+        this.nom = "log";
+    }
+
     @Override
     public double evaluer(double param) throws LogException, SqrtException, PasUneFonctionException {
         double res = Math.log(param);

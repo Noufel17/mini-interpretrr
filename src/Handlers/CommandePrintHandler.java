@@ -1,10 +1,13 @@
 package Handlers;
 
 import Commandes.Commande;
-import Commandes.CommandeEnd;
 import Commandes.CommandePrint;
 
 public class CommandePrintHandler extends CommandeHandler {
+    public CommandePrintHandler() {
+        this.motCle = "print";
+    }
+
     @Override
     public void setNext(CommandeHandler handler) {
         this.next = handler;
@@ -12,11 +15,16 @@ public class CommandePrintHandler extends CommandeHandler {
 
     @Override
     public boolean isMatched(String lignCmd) {
-        return this.motCle.equals(lignCmd.split(" ")[0]);
+        String cmd = lignCmd.split(" ")[0];
+        return this.motCle.equals(cmd);
     }
 
     @Override
-    public Commande creerInstance() {
-        return new CommandePrint();
+    public Commande creerInstance(String lignCmd) {
+        if (isMatched(lignCmd)){
+            return new CommandePrint();
+        }else{
+            return next.creerInstance(lignCmd);
+        }
     }
 }

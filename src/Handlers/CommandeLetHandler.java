@@ -4,7 +4,10 @@ import Commandes.Commande;
 import Commandes.CommandeLet;
 
 public class CommandeLetHandler extends CommandeHandler{
-    private final String motCle = "let";
+    public CommandeLetHandler() {
+        this.motCle = "let";
+    }
+
     @Override
     public void setNext(CommandeHandler handler) {
         this.next = handler;
@@ -16,7 +19,11 @@ public class CommandeLetHandler extends CommandeHandler{
     }
 
     @Override
-    public Commande creerInstance() {
-        return new CommandeLet();
+    public Commande creerInstance(String lignCmd) {
+        if (isMatched(lignCmd)){
+            return new CommandeLet();
+        }else{
+         return next.creerInstance(lignCmd);
+        }
     }
 }
