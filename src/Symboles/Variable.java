@@ -25,16 +25,12 @@ public class Variable extends Symbole {
         if (this.nom.equals("let") || this.nom.equals("print") || this.nom.equals("end")) {
             throw new VarNomCmdException();
         } else {
-            if (this.nom.matches("cos|sin|tan|log|sqrt|abs")) {
-                throw new VarNomFctException();
-            } else {
                 char ch = this.nom.charAt(0);
                 if (Character.isDigit(ch)) { // test de la forme du nom du variable
                     throw new VarNomfauxException();
                 } else {
                     NomJuste = true;
                 }
-            }
             return NomJuste;
         }// pour verifier si
         // le nom est valable(ecrit sous la forme alphanumerique, commance avec

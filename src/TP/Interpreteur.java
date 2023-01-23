@@ -22,11 +22,10 @@ private final CommandeHandler firstHandler;
 
     // la methode d'execution de la ligne de commande
     public void interpreter(String ligneCmd) throws Exception {
-        int result = 0;
         Commande cmd = firstHandler.creerInstance(ligneCmd);
-        result = cmd.executer(ligneCmd);
-        if (result != 0){
+        if(cmd == null){
             throw new cmdFalseException();
         }
+        cmd.executer(ligneCmd);
     }
 }

@@ -2,10 +2,7 @@ package Evaluation;
 
 import Exceptions.*;
 import Symboles.Function;
-import Symboles.Variable;
 import TP.TableSymbole;
-
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

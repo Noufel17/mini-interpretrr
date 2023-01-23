@@ -59,15 +59,4 @@ public class TableSymbole {
         }
         return instance;
     }
-    public double getVariableValue(String nom) throws SymboleVarNexistePas{
-        for (Symbole symVar : tableSymbole) {
-            if (symVar.getNom().equalsIgnoreCase(nom)) {
-                if(symVar instanceof Variable) {
-                    return ((Variable) symVar).getValeur();
-                    // get valeurs et get function et evaluer dans la fonction
-                }
-            }
-        }
-        throw new SymboleVarNexistePas(); // unhandled
-    }
 }
